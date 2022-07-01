@@ -121,12 +121,12 @@ local definition_handler = function(_,locations, ctx, _)
 			data[i] = rel_path
 			if filename == item.filename then
 				if i == 0 then
-					data[i] = "[D] " .. data[i]
+					data[i] = "[D] " .. data[i] .. i
 				else
-					data[i] = "[C] " .. data[i]
+					data[i] = "[C] " .. data[i] .. i
 				end
 			else
-				data[i] = "[O] " .. data[i]
+				data[i] = "[O] " .. data[i] .. i
 			end
 		end
         local opts = createOpts();
