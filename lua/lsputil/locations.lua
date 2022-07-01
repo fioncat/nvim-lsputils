@@ -73,7 +73,13 @@ local function references_handler(_, locations, ctx, _)
 		local rel_path = util.get_relative_path(cwd, item.filename)
 		data[i] = rel_path
 		if filename == item.filename then
-			data[i] = data[i] .. " [Current]"
+			if i == 0 then
+				data[i] = "[D] " .. data[i]
+			else
+				data[i] = "[C] " .. data[i]
+			end
+		else
+			data[i] = "[O] " .. data[i]
 		end
     end
     local opts = createOpts();
@@ -109,17 +115,21 @@ local definition_handler = function(_,locations, ctx, _)
 	    local data = {}
 	    local filename = vim.api.nvim_buf_get_name(bufnr)
 	    action.items = vim.lsp.util.locations_to_items(locations)
-	    for i, item in pairs(action.items) do
-		data[i] = item.text
-		if filename ~= item.filename then
-		    local cwd = vim.fn.getcwd(0)..'/'
-		    local add = util.get_relative_path(cwd, item.filename)
-		    data[i] = data[i]..' - '..add
+		local cwd = vim.fn.getcwd(0)..'/'
+		for i, item in pairs(action.items) do
+			local rel_path = util.get_relative_path(cwd, item.filename)
+			data[i] = rel_path
+			if filename == item.filename then
+				if i == 0 then
+					data[i] = "[D] " .. data[i]
+				else
+					data[i] = "[C] " .. data[i]
+				end
+			else
+				data[i] = "[O] " .. data[i]
+			end
 		end
-                data[i] = data[i]:gsub("\n", "")
-		item.text = nil
-	    end
-            local opts = createOpts();
+        local opts = createOpts();
 	    opts.data = data
 	    action.popup = popfix:new(opts)
 	    if not action.popup then
