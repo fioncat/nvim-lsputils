@@ -68,8 +68,13 @@ local function references_handler(_, locations, ctx, _)
     local data = {}
     local filename = vim.api.nvim_buf_get_name(bufnr)
     action.items = vim.lsp.util.locations_to_items(locations)
+	local cwd = vim.fn.getcwd(0)..'/'
     for i, item in pairs(action.items) do
-	    data[i] = item.filename
+		local rel_path = util.get_relative_path(cwd, item.filename)
+		data[i] = rel_path
+		if filename == item.filename then
+			data[i] = date[i] .. " [Current]"
+		end
     end
     local opts = createOpts();
     opts.data = data
