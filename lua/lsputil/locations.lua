@@ -69,14 +69,7 @@ local function references_handler(_, locations, ctx, _)
     local filename = vim.api.nvim_buf_get_name(bufnr)
     action.items = vim.lsp.util.locations_to_items(locations)
     for i, item in pairs(action.items) do
-	data[i] = item.text
-	if filename ~= item.filename then
-	    local cwd = vim.fn.getcwd(0)..'/'
-	    local add = util.get_relative_path(cwd, item.filename)
-	    data[i] = data[i]..' - '..add
-	end
-        data[i] = data[i]:gsub("\n", "")
-	action.items.text = nil
+	    data[i] = item.filename
     end
     local opts = createOpts();
     opts.data = data
