@@ -73,7 +73,7 @@ local function references_handler(_, locations, ctx, _)
 		local rel_path = util.get_relative_path(cwd, item.filename)
 		data[i] = rel_path
 		if filename == item.filename then
-			if i == 0 then
+			if i == 1 then
 				data[i] = "[D] " .. data[i]
 			else
 				data[i] = "[C] " .. data[i]
@@ -121,12 +121,12 @@ local definition_handler = function(_,locations, ctx, _)
 			data[i] = rel_path
 			if filename == item.filename then
 				if i == 0 then
-					data[i] = "[D] " .. data[i] .. i
+					data[i] = "[D] " .. data[i]
 				else
-					data[i] = "[C] " .. data[i] .. i
+					data[i] = "[C] " .. data[i]
 				end
 			else
-				data[i] = "[O] " .. data[i] .. i
+				data[i] = "[O] " .. data[i]
 			end
 		end
         local opts = createOpts();
