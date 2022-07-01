@@ -73,7 +73,7 @@ local function references_handler(_, locations, ctx, _)
 		local rel_path = util.get_relative_path(cwd, item.filename)
 		data[i] = rel_path
 		if filename == item.filename then
-			data[i] = date[i] .. " [Current]"
+			data[i] = data[i] .. " [Current]"
 		end
     end
     local opts = createOpts();
